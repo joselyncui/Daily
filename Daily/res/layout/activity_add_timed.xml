@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.mengzhu.daily.AddTimedActivity" >
+
+    <include layout="@layout/toolbar_other_layout" />
+
+     <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        >
+
+        <com.mengzhu.daily.view.PickerView
+            android:id="@+id/hour_pv"
+            android:layout_width="80dp"
+            android:layout_height="160dp" />
+
+        <TextView
+            android:id="@+id/hour_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/hour_pv"
+            android:text="时"
+            android:textColor="@color/colorPrimary"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <com.mengzhu.daily.view.PickerView
+            android:id="@+id/minu_pv"
+            android:layout_width="80dp"
+            android:layout_height="160dp"
+            android:layout_toRightOf="@id/hour_tv" />
+
+        <TextView
+            android:id="@+id/minu_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/minu_pv"
+            android:text="分"
+            android:textColor="@color/colorPrimary"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="30dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="备注" />
+
+        <com.mengzhu.daily.view.ClearEditText
+            android:id="@+id/timed_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textfield_dark"
+            android:inputType="text" />
+    </LinearLayout>
+    
+     <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp"
+        android:background="@drawable/btn_bg"
+        android:text="删除定时"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" 
+        android:visibility="invisible"/>
+
+</LinearLayout>

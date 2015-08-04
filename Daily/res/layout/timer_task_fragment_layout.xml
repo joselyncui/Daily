@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/timed_container"
+    >
+    <View
+	    android:id="@+id/image_top"
+	    android:layout_width="match_parent"
+	    android:layout_height="200dp"
+	    android:background="@drawable/timed_toolbar_bg"/>
+	<View 
+	    android:layout_width="match_parent"
+	    android:layout_height="200dp"
+	    android:background="@drawable/ban_shadow"/>
+
+    <ListView
+        android:id="@+id/timed_lisview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:layout_below="@id/image_top"
+        android:divider="@color/ll_gray"
+        android:dividerHeight="1dp"
+        android:scrollbars="none"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@color/white" 
+        android:listSelector="@color/white"
+        />
+
+</RelativeLayout>

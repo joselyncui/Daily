@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mengzhu.daily.view.RippleRelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:rv_color="#ccc"
+    app:rv_rippleDuration="200"
+    app:rv_type="simpleRipple" 
+    android:id="@+id/timed_item"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <com.mengzhu.daily.view.RoundImageView
+        android:id="@+id/item_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/task_item_icon" />
+
+     <com.mengzhu.daily.view.SwitchButton 
+        android:id="@+id/item_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center" 
+        android:scaleX="0.7"
+        android:scaleY="0.7"/>
+
+    <TextView
+        android:id="@+id/item_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@+id/item_toggle"
+        android:layout_toRightOf="@id/item_icon"
+        android:text="07:40"
+        android:textSize="26sp" />
+
+    <TextView
+        android:id="@+id/item_com"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/item_title"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@id/item_icon"
+        android:text="记得吃饭哦"
+        android:textColor="@color/light_gray"
+        android:textSize="14sp" />
+
+
+</com.mengzhu.daily.view.RippleRelativeLayout >
