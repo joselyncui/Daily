@@ -36,6 +36,7 @@ public class DragListAdapter extends SimpleAdapter<Task> {
 	@Override
 	public void bindData(int position, View convertView,ViewHolder holder) {
 		final Task task = getItem(position);
+		
 		System.out.println("bind data**********" + task.getIsOpen());
 		
 		TextView title = holder.findView(R.id.item_title);

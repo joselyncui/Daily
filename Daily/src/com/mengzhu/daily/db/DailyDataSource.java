@@ -89,6 +89,7 @@ public final class DailyDataSource {
 	}
 
 	public void updateTask(Task task) {
+		System.out.println("update databse " +task.getId() +"  " + task.getIsOpen());
 		SQLiteDatabase database = open();
 		
 		ContentValues params = new ContentValues();
@@ -99,6 +100,71 @@ public final class DailyDataSource {
 		
 		database.update(TaskEntity.TABLE_NAME, params, TaskEntity.COLUMN_ID+"=?", 
 				new String[]{String.valueOf(task.getId())});
+	}
+	
+	public void changeTaskPosition(Task from, Task to){
+		
+		deleteTask(from);//移除目标task
+		
+		SQLiteDatabase database = open();
+		database.beginTransaction();
+		
+		String[] columns = new String[]{TaskEntity.COLUMN_ID, TaskEntity.COLUMN_COMMENT, 
+				TaskEntity.COLUMN_LEVEL, TaskEntity.COLUMN_TIMES, TaskEntity.COLUMN_ISOPEN};
+		String selection = "";
+		if (from.getId() < to.getId()) {//在上面
+			selection =TaskEntity.COLUMN_ID + ">?";
+		} else {
+			selection = TaskEntity.COLUMN_ID+">=?";
+		}
+		
+		String[] args = new String[]{to.getId()+""};
+		Cursor cursor = database.query(TaskEntity.TABLE_NAME, columns, selection, args, null, null, null);
+		List<Task> tasks = new ArrayList<>();
+		
+		if (cursor.moveToFirst()) {
+			do {
+				Task task = new Task();
+				task.setId(cursor.getInt(cursor
+						.getColumnIndexOrThrow(TaskEntity.COLUMN_ID)));
+				task.setComment(cursor.getString(cursor
+						.getColumnIndexOrThrow(TaskEntity.COLUMN_COMMENT)));
+				task.setHours(cursor.getFloat(cursor
+						.getColumnIndexOrThrow(TaskEntity.COLUMN_TIMES)));
+				task.setLevel(cursor.getInt(cursor
+						.getColumnIndexOrThrow(TaskEntity.COLUMN_LEVEL)));
+				task.setIsOpen(cursor.getInt(cursor
+						.getColumnIndexOrThrow(TaskEntity.COLUMN_ISOPEN)));
+				tasks.add(task);
+			} while (cursor.moveToNext());
+		}
+		
+		//删除选项
+		for (int i = 0; i < tasks.size(); i++) {
+			String delWhareStr = TaskEntity.COLUMN_ID + "=" + tasks.get(i).getId();
+			database.delete(TaskEntity.TABLE_NAME, delWhareStr, null);
+		}
+		
+		//插入原task
+		ContentValues params = new ContentValues();
+		params.put(TaskEntity.COLUMN_COMMENT, from.getComment());
+		params.put(TaskEntity.COLUMN_LEVEL, from.getLevel());
+		params.put(TaskEntity.COLUMN_TIMES, from.getHours());
+		params.put(TaskEntity.COLUMN_ISOPEN, from.getIsOpen());
+		database.insert(TaskEntity.TABLE_NAME, null, params);
+		
+		//插入被删除的tasks
+		for (int i = 0; i < tasks.size(); i++) {
+			ContentValues params2 = new ContentValues();
+			params.put(TaskEntity.COLUMN_COMMENT, tasks.get(i).getComment());
+			params.put(TaskEntity.COLUMN_LEVEL, tasks.get(i).getLevel());
+			params.put(TaskEntity.COLUMN_TIMES, tasks.get(i).getHours());
+			params.put(TaskEntity.COLUMN_ISOPEN, tasks.get(i).getIsOpen());
+			database.insert(TaskEntity.TABLE_NAME, null, params);
+		}
+		
+		database.setTransactionSuccessful();
+		database.endTransaction();
 	}
 	
 	public Cursor getTaskCursor(){

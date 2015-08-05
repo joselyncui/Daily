@@ -302,6 +302,7 @@ public class SwitchButton extends View implements OnClickListener {
 			turnOff();
 		}
 	}
+	
 
 	public void setEnable(boolean isEnable) {
 		this.isEnable = isEnable;

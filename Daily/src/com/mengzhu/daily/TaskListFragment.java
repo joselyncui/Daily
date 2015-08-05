@@ -31,7 +31,6 @@ public class TaskListFragment extends BaseFragment{
 	private TaskListAdapter<Task> taskListAdapter;
     private List<Task> tasks;
     private DailyDataSource dataSource;
-    
    
     private Context context;
     private Cursor cursor;
@@ -61,19 +60,22 @@ public class TaskListFragment extends BaseFragment{
 		context = getActivity();
 		
 		cursor = dataSource.getTaskCursor();
-		taskListAdapter = new TaskListAdapter<Task>(context, cursor, false, R.layout.task_list_item_layout);
+		taskListAdapter = new TaskListAdapter<Task>(context, cursor, false, R.layout.task_list_item_layout, handler);
 		dragListView.setAdapter(taskListAdapter);
 		
 		dragListView.setOnDropListener(new OnDropListener() {
 			
 			@Override
 			public void onDrop(int from, int to) {
-				Task task = (Task) dragListView.getAdapter().getItem(from);
 				
-				dataSource.deleteTask(task);
-				dataSource.addTask(task);
 				
-				handler.sendEmptyMessage(UPDATE_CURSOR);//update cursor
+				if (from != to) {
+					Task taskFrom = (Task) dragListView.getAdapter().getItem(from);
+					Task taskTo = (Task) dragListView.getAdapter().getItem(to);
+					dataSource.changeTaskPosition(taskFrom, taskTo);
+					handler.sendEmptyMessage(UPDATE_CURSOR);//update cursor
+				}
+				System.out.println("drop after");
 			}
 		});
         

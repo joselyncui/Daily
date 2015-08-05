@@ -1,6 +1,7 @@
 package com.mengzhu.daily.adapter;
 
 import com.mengzhu.daily.R;
+import com.mengzhu.daily.TaskListFragment;
 import com.mengzhu.daily.db.DailyDataSource;
 import com.mengzhu.daily.entity.Task;
 import com.mengzhu.daily.view.SwitchButton;
@@ -8,9 +9,11 @@ import com.mengzhu.daily.view.SwitchButton.OnStateChangeListener;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Handler;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -20,10 +23,13 @@ public class TaskListAdapter<T> extends CursorAdapter {
 	LayoutInflater inflater;
 	
 	private DailyDataSource dataSource;
+	private Handler handler;
 
 	public TaskListAdapter(Context context, Cursor c, boolean autoRequery,
-			int resourceId) {
+			int resourceId, Handler handler) {
 		super(context, c, autoRequery);
+		this.handler = handler;
+		
 		dataSource = DailyDataSource.getInstance(context);
 		this.resourceId = resourceId;
 		inflater = (LayoutInflater) context
@@ -48,32 +54,36 @@ public class TaskListAdapter<T> extends CursorAdapter {
 				.findViewById(R.id.item_imp);
 		TextView hourTextView = (TextView) convertView
 				.findViewById(R.id.item_time);
-		SwitchButton switchButton = (SwitchButton) convertView
+		final SwitchButton switchButton = (SwitchButton) convertView
 				.findViewById(R.id.item_toggle);
 
 		final Task task = DailyDataSource.cursorToTask(cursor);
 		title.setText(task.getComment());
 		levelTextView.setText(task.getLevel() + "级 " + task.getIsOpen() +" id " + task.getId());
 		hourTextView.setText(task.getHours() + "小时");
+		
+		System.out.println("bind " + task.getId() +" " + task.getIsOpen());
 		switchButton.changeState(task.getIsOpen());
 		switchButton.setEnable(true);
 		
-		switchButton.setOnStateChangeListener(new OnStateChangeListener() {
-
+		switchButton.setOnClickListener(new OnClickListener() {
+			
 			@Override
-			public void onStateChanged(boolean isOn) {
-				System.out.println("state change");
-				// 更新数据库
-				if (isOn) {
-					task.setIsOpen(Task.OPEN);
-				} else {
+			public void onClick(View v) {
+				System.out.println("click");
+				if (switchButton.isOn()) {
+					switchButton.changeState(Task.CLOSE);
 					task.setIsOpen(Task.CLOSE);
+				} else {
+					switchButton.changeState(Task.OPEN);
+					task.setIsOpen(Task.OPEN);
 				}
+				
 				dataSource.updateTask(task);
-				System.out.println("update " + isOn +"  " + task.getId());
+				changeCursor(dataSource.getTaskCursor());
 			}
 		});
-
+		
 	}
 
 }
