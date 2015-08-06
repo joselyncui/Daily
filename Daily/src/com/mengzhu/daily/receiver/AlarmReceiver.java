@@ -5,7 +5,7 @@ import com.mengzhu.daily.MainActivity;
 import com.mengzhu.daily.R;
 import com.mengzhu.daily.entity.Timed;
 import com.mengzhu.daily.service.MediaService;
-import com.mengzhu.daily.util.GsonUtils;
+import com.mengzhu.daily.util.GsonUtil;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -24,7 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver{
 	public void onReceive(Context context, Intent intent) {
 		this.context = context;
 		String timedStr = intent.getExtras().getString(Timed.GSON_KEY);
-		Timed timed = GsonUtils.strToObj(Timed.class,timedStr);
+		Timed timed = GsonUtil.strToObj(Timed.class,timedStr);
 		
 		createNotification(timed.getComment());
 		Intent serviceIntent = new Intent(context, MediaService.class);

@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class DateUtils {
+public class DateUtil {
 	
 	public static long getTime(int hour, int minute){
 		

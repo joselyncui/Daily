@@ -9,8 +9,8 @@ import android.widget.TextView;
 import com.mengzhu.daily.R;
 import com.mengzhu.daily.db.DailyDataSource;
 import com.mengzhu.daily.entity.Timed;
-import com.mengzhu.daily.util.AlarmUtils;
-import com.mengzhu.daily.util.DateUtils;
+import com.mengzhu.daily.util.AlarmUtil;
+import com.mengzhu.daily.util.DateUtil;
 import com.mengzhu.daily.view.SwitchButton;
 import com.mengzhu.daily.view.SwitchButton.OnStateChangeListener;
 
@@ -38,7 +38,7 @@ public class TimedListAdapter extends SimpleAdapter<Timed>{
 		SwitchButton switchBtn = holder.findView(R.id.item_toggle);
 		
 		comment.setText(timed.getComment());
-		time.setText(DateUtils.dateFormat(timed.getTime()));
+		time.setText(DateUtil.dateFormat(timed.getTime()));
 		
 		if (timed.getTime() <=  System.currentTimeMillis()) {
 			switchBtn.changeState(Timed.CLOSE);
@@ -56,9 +56,9 @@ public class TimedListAdapter extends SimpleAdapter<Timed>{
 				public void onStateChanged(boolean isOn) {
 					if (isOn) {
 						timed.open();
-						AlarmUtils.setAlarms(context, timed);
+						AlarmUtil.setAlarms(context, timed);
 					} else {
-						AlarmUtils.cancelAlarms(context, timed);
+						AlarmUtil.cancelAlarms(context, timed);
 						timed.close();
 					}
 					database.updTimed(timed);

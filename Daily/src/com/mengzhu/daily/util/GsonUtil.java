@@ -2,7 +2,7 @@ package com.mengzhu.daily.util;
 
 import com.google.gson.Gson;
 
-public class GsonUtils {
+public class GsonUtil {
 	
 	public static <T> String objToStr(T obj){
 		Gson gson = new Gson();

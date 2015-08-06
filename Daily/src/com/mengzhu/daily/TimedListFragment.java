@@ -21,8 +21,9 @@ import com.mengzhu.daily.adapter.TimedListAdapter;
 import com.mengzhu.daily.db.DailyDataSource;
 import com.mengzhu.daily.entity.Timed;
 import com.mengzhu.daily.receiver.AlarmOverReceiver;
+import com.mengzhu.daily.receiver.AlarmOverReceiver.AlarmOverInterface;
 
-public class TimedListFragment extends BaseFragment {
+public class TimedListFragment extends BaseFragment implements AlarmOverInterface{
 	public static final String TAG = "TimedListFragment";
 	private ListView timedListView;
 	private List<Timed> timeds = new ArrayList<Timed>();
@@ -31,15 +32,14 @@ public class TimedListFragment extends BaseFragment {
 	private Handler handler = new Handler();
 	private Context context;
 
-	LocalBroadcastManager broadcastManager;
-	private AlarmOverReceiver alarmOverReceiver = new AlarmOverReceiver();
+	private AlarmOverReceiver alarmOverReceiver = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		this.context = getActivity();
-		broadcastManager = LocalBroadcastManager.getInstance(getActivity());
-
+		alarmOverReceiver = new AlarmOverReceiver(this);
+		
 		View view = inflater.inflate(R.layout.timer_task_fragment_layout,
 				container, false);
 		timedListView = (ListView) view.findViewById(R.id.timed_lisview);
@@ -112,4 +112,15 @@ public class TimedListFragment extends BaseFragment {
 		super.onDestroy();
 	}
 
+	@Override
+	public void onAlarmOver(int timedId) {
+		for (int i = 0; i < timeds.size(); i++) {
+			if (timeds.get(i).getId() == timedId) {
+				timeds.get(i).setIsOpen(Timed.CLOSE);
+				adapter.notifyDataSetChanged();
+				return;
+			}
+		}
+	}
+	
 }

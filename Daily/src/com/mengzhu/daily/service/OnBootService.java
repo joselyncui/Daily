@@ -9,7 +9,7 @@ import android.os.IBinder;
 
 import com.mengzhu.daily.db.DailyDataSource;
 import com.mengzhu.daily.entity.Timed;
-import com.mengzhu.daily.util.AlarmUtils;
+import com.mengzhu.daily.util.AlarmUtil;
 
 public class OnBootService extends Service{
 	 DailyDataSource dataSource;
@@ -24,7 +24,7 @@ public class OnBootService extends Service{
 		
 		for (int i = 0; i < timeds.size(); i++) {
 			if (timeds.get(i).getTime() > System.currentTimeMillis()) {
-				AlarmUtils.setAlarms(this, timeds.get(i));
+				AlarmUtil.setAlarms(this, timeds.get(i));
 			}
 		}
 		super.onCreate();

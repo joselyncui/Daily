@@ -16,8 +16,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.mengzhu.daily.db.DailyDataSource;
 import com.mengzhu.daily.entity.Timed;
-import com.mengzhu.daily.util.AlarmUtils;
-import com.mengzhu.daily.util.DateUtils;
+import com.mengzhu.daily.util.AlarmUtil;
+import com.mengzhu.daily.util.DateUtil;
 import com.mengzhu.daily.view.PickerView;
 import com.mengzhu.daily.view.PickerView.onSelectListener;
 
@@ -62,8 +62,8 @@ public class AddTimedActivity extends BaseActivity implements OnClickListener{
 			String timeStr = bundle.getString(Timed.GSON_KEY);
 			Gson gson = new Gson();
 			timed = gson.fromJson(timeStr, Timed.class);
-			hour = DateUtils.getHour(timed.getTime());
-			minute = DateUtils.getMinute(timed.getTime());
+			hour = DateUtil.getHour(timed.getTime());
+			minute = DateUtil.getMinute(timed.getTime());
 			comTextView.setText(timed.getComment());
 			delBtn.setVisibility(View.VISIBLE);
 		}
@@ -110,8 +110,8 @@ public class AddTimedActivity extends BaseActivity implements OnClickListener{
 			}
 		});
 		
-		hour = DateUtils.getHour();
-		minute = DateUtils.getMinute();
+		hour = DateUtil.getHour();
+		minute = DateUtil.getMinute();
 	}
 	/**
 	 * 启动activity
@@ -157,7 +157,7 @@ public class AddTimedActivity extends BaseActivity implements OnClickListener{
 		}
 		timed.setComment(comTextView.getText().toString());
 		timed.setIsOpen(Timed.OPEN);
-		timed.setTime(DateUtils.getTime(hour, minute));
+		timed.setTime(DateUtil.getTime(hour, minute));
 		if (timed.getTime()- System.currentTimeMillis() < 40) {
 			Toast.makeText(this, "小于当前时间", Toast.LENGTH_LONG).show();
 			return;
@@ -169,7 +169,7 @@ public class AddTimedActivity extends BaseActivity implements OnClickListener{
 			timed.setId((int)id);
 		}
 		
-		AlarmUtils.setAlarms(this, timed);//覆盖或者添加 定时
+		AlarmUtil.setAlarms(this, timed);//覆盖或者添加 定时
 		finish();
 	}
 	

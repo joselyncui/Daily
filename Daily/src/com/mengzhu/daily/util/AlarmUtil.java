@@ -8,13 +8,13 @@ import android.content.Intent;
 import com.mengzhu.daily.entity.Timed;
 import com.mengzhu.daily.receiver.AlarmReceiver;
 
-public class AlarmUtils {
+public class AlarmUtil {
 
 	public static void setAlarms(Context context, Timed timed) {
 		System.out.println("alarm create " );
 		AlarmManager am = getAlarmManager(context);
 		
-		String timedStr = GsonUtils.objToStr(timed);
+		String timedStr = GsonUtil.objToStr(timed);
 		
 		Intent intent = new Intent();
 		intent.setAction(AlarmReceiver.ALARM_RECEIVER_ACTION);
