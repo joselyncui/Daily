@@ -22,6 +22,12 @@ public final class DailyDataSource {
 		dbHelper = new DailyDBHelper(context);
 	}
 
+	/**
+	 * 获得数据库
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
 	public SQLiteDatabase open() throws SQLException {
 		return dbHelper.getWritableDatabase();
 	}
@@ -46,7 +52,7 @@ public final class DailyDataSource {
 	}
 
 	/**
-	 * 获得所有的任务
+	 * 获得所有的任务， 并返回List
 	 * 
 	 * @return
 	 */
@@ -87,8 +93,12 @@ public final class DailyDataSource {
 		database.close();
 	}
 
+	/**
+	 * 更新task信息
+	 * 
+	 * @param task
+	 */
 	public void updateTask(Task task) {
-		System.out.println("update databse " +task.getId() +"  " + task.getIsOpen());
 		SQLiteDatabase database = open();
 		
 		ContentValues params = new ContentValues();
@@ -101,6 +111,12 @@ public final class DailyDataSource {
 				new String[]{String.valueOf(task.getId())});
 	}
 	
+	/**
+	 * 修改task位置
+	 * 
+	 * @param from
+	 * @param to
+	 */
 	public void changeTaskPosition(Task from, Task to){
 		
 		deleteTask(from);//移除目标task
@@ -166,14 +182,24 @@ public final class DailyDataSource {
 		database.endTransaction();
 	}
 	
+	/**
+	 * 获取所有task, 并返回cursor
+	 * 
+	 * @return
+	 */
 	public Cursor getTaskCursor(){
 		String queryStr = "SELECT * FROM " + TaskEntity.TABLE_NAME;
 		SQLiteDatabase database = open();
 		Cursor cursor = database.rawQuery(queryStr, null);
-//		cursor.setNotificationUri(context.getContentResolver(), uri);
 		return cursor;
 	}
 	
+	/**
+	 * 将cursor转化为task
+	 * 
+	 * @param cursor
+	 * @return
+	 */
 	public static Task cursorToTask(Cursor cursor) {
 		Task task = new Task();
 		task.setId(cursor.getInt(cursor
@@ -271,6 +297,12 @@ public final class DailyDataSource {
 		dbHelper.close();
 	}
 
+	/**
+	 * 获得实例
+	 * 
+	 * @param context
+	 * @return
+	 */
 	public static DailyDataSource getInstance(Context context) {
 		if (null == dailyDataSource) {
 			dailyDataSource = new DailyDataSource(context);
