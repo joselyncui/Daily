@@ -4,27 +4,48 @@ import com.mengzhu.daily.AddTimedActivity;
 import com.mengzhu.daily.MainActivity;
 import com.mengzhu.daily.R;
 import com.mengzhu.daily.service.OnBootService;
-
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
 public class OnBootReceiver extends BroadcastReceiver{
 	private Context context;
 
+	@SuppressLint("InlinedApi")
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		this.context = context;
-		createNotification("start");
+
+		if (Intent.ACTION_BOOT_COMPLETED.endsWith(intent.getAction())) {
+			boot();
+		} else if (Intent.ACTION_AIRPLANE_MODE_CHANGED.endsWith(intent.getAction())) {
+			
+			 int isAirplaneMode = Settings.System.getInt(context.getContentResolver(),   
+	                    Settings.Global.AIRPLANE_MODE_ON, 0) ; 
+	            boolean find = (isAirplaneMode == 1)?true:false; 
+			if (!find) {
+				
+				System.out.println("find");
+				boot();
+			}
+			
+		}
+		
+		
+	}
+	
+	private void boot(){
+//		createNotification("start");
 		
 		//开启后台服务
 		Intent newIntent = new Intent(context, OnBootService.class);
 		context.startService(newIntent);
-		
 	}
 	
 	private void createNotification(String comment){

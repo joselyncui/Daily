@@ -16,7 +16,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerVertical="true"
-        android:src="@drawable/task_item_icon" />
+        android:src="@drawable/timed_item_icon" />
 
      <com.mengzhu.daily.view.SwitchButton 
         android:id="@+id/item_toggle"

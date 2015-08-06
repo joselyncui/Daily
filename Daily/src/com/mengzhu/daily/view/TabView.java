@@ -1,5 +1,7 @@
 package com.mengzhu.daily.view;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -89,10 +91,11 @@ public class TabView extends LinearLayout implements OnClickListener {
 	private void showContent(BaseFragment to) {
 		if (to != current) {
 			FragmentTransaction transaction = fm.beginTransaction();
+			
 			if (!to.isAdded()) {
 				transaction.add(R.id.fragment_container, to);
 			}
-
+			
 			transaction.show(to);
 
 			if (current != null) {

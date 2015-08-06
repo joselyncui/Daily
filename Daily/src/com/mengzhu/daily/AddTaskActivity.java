@@ -29,14 +29,12 @@ public class AddTaskActivity extends Activity implements OnClickListener{
 	private TextSeekBar hourSeekBar;
 	private Button delButton;
 	private DailyDataSource dailyDataSource;
-	private Context context;
 	private Task task;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_task);
-		context = this;
 		
 		comTextView = (EditText) findViewById(R.id.task_title);
 		levelSeekBar = (TextSeekBar) findViewById(R.id.level_seekbar);

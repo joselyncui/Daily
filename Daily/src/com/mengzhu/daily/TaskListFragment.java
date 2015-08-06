@@ -1,21 +1,15 @@
 package com.mengzhu.daily;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnDragListener;
 import android.view.ViewGroup;
-
-import com.mengzhu.daily.adapter.DragListAdapter;
 import com.mengzhu.daily.adapter.TaskListAdapter;
 import com.mengzhu.daily.db.DailyDataSource;
 import com.mengzhu.daily.entity.Task;
@@ -29,13 +23,13 @@ public class TaskListFragment extends BaseFragment{
 	public static final int UPDATE_CURSOR = 1;
 	private DragListView dragListView;
 	private TaskListAdapter<Task> taskListAdapter;
-    private List<Task> tasks;
     private DailyDataSource dataSource;
    
     private Context context;
     private Cursor cursor;
     
-    private Handler handler = new Handler(){
+    @SuppressLint("HandlerLeak")
+	private Handler handler = new Handler(){
     	public void handleMessage(Message msg) {
     		if (msg.what == UPDATE_CURSOR) {
 				taskListAdapter.changeCursor(dataSource.getTaskCursor());
@@ -56,7 +50,6 @@ public class TaskListFragment extends BaseFragment{
 		dragListView = (DragListView)view.findViewById(R.id.drag_list_view);
 		dataSource = DailyDataSource.getInstance(getActivity());
 		
-		tasks = new ArrayList<Task>();
 		context = getActivity();
 		
 		cursor = dataSource.getTaskCursor();
@@ -68,14 +61,12 @@ public class TaskListFragment extends BaseFragment{
 			@Override
 			public void onDrop(int from, int to) {
 				
-				
 				if (from != to) {
 					Task taskFrom = (Task) dragListView.getAdapter().getItem(from);
 					Task taskTo = (Task) dragListView.getAdapter().getItem(to);
 					dataSource.changeTaskPosition(taskFrom, taskTo);
 					handler.sendEmptyMessage(UPDATE_CURSOR);//update cursor
 				}
-				System.out.println("drop after");
 			}
 		});
         

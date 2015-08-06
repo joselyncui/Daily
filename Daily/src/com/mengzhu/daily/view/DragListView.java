@@ -1,6 +1,5 @@
 package com.mengzhu.daily.view;
 
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -8,22 +7,19 @@ import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.mengzhu.daily.AddTaskActivity;
 import com.mengzhu.daily.R;
-import com.mengzhu.daily.adapter.DragListAdapter;
 import com.mengzhu.daily.adapter.TaskListAdapter;
-import com.mengzhu.daily.db.DailyDataSource;
 import com.mengzhu.daily.entity.Task;
 
 /**
@@ -116,7 +112,9 @@ public class DragListView extends ListView implements OnItemClickListener{
             |WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
         windowParams.format = PixelFormat.TRANSLUCENT;
         windowParams.windowAnimations = android.R.style.Animation_Dialog;
-
+        if (bm.isRecycled()) {
+			return;
+		}
         ImageView imageView = new ImageView(getContext());
         imageView.setImageBitmap(bm);
         imageView.setBackgroundColor(getResources().getColor(R.color.white));

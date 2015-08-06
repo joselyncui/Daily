@@ -73,6 +73,9 @@ public class AddTimedActivity extends BaseActivity implements OnClickListener{
 		
 	}
 
+	/**
+	 * 初始化时间选择器
+	 */
 	private void initDatePicker(){
 		List<String> hours = new ArrayList<String>();
 		List<String> minus = new ArrayList<String>();
@@ -110,6 +113,12 @@ public class AddTimedActivity extends BaseActivity implements OnClickListener{
 		hour = DateUtils.getHour();
 		minute = DateUtils.getMinute();
 	}
+	/**
+	 * 启动activity
+	 * 
+	 * @param activity
+	 * @param timed
+	 */
 	public static void start(Activity activity, Timed timed) {
 		Intent intent = new Intent(activity, AddTimedActivity.class);
 		if (timed != null) {
@@ -139,6 +148,9 @@ public class AddTimedActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
+	/**
+	 * 添加或者修改定时任务
+	 */
 	private void addTimed(){
 		if (timed == null) {
 			timed = new Timed();
@@ -153,12 +165,17 @@ public class AddTimedActivity extends BaseActivity implements OnClickListener{
 		if (timed.getId()!=0) {
 			dataSource.updTimed(timed);
 		} else {
-			dataSource.addTimed(timed);
-			AlarmUtils.setAlarms(this, timed);
+			long id = dataSource.addTimed(timed);
+			timed.setId((int)id);
 		}
+		
+		AlarmUtils.setAlarms(this, timed);//覆盖或者添加 定时
 		finish();
 	}
 	
+	/**
+	 * 从数据库中删除定时任务
+	 */
 	private void delete(){
 		dataSource.delTimed(timed);
 		finish();

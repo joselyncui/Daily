@@ -1,12 +1,5 @@
 package com.mengzhu.daily.adapter;
 
-import com.mengzhu.daily.R;
-import com.mengzhu.daily.TaskListFragment;
-import com.mengzhu.daily.db.DailyDataSource;
-import com.mengzhu.daily.entity.Task;
-import com.mengzhu.daily.view.SwitchButton;
-import com.mengzhu.daily.view.SwitchButton.OnStateChangeListener;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Handler;
@@ -16,6 +9,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.mengzhu.daily.R;
+import com.mengzhu.daily.TaskListFragment;
+import com.mengzhu.daily.db.DailyDataSource;
+import com.mengzhu.daily.entity.Task;
+import com.mengzhu.daily.view.SwitchButton;
 
 public class TaskListAdapter<T> extends CursorAdapter {
 
@@ -59,10 +58,9 @@ public class TaskListAdapter<T> extends CursorAdapter {
 
 		final Task task = DailyDataSource.cursorToTask(cursor);
 		title.setText(task.getComment());
-		levelTextView.setText(task.getLevel() + "级 " + task.getIsOpen() +" id " + task.getId());
+		levelTextView.setText(task.getLevel() + "级 " );
 		hourTextView.setText(task.getHours() + "小时");
 		
-		System.out.println("bind " + task.getId() +" " + task.getIsOpen());
 		switchButton.changeState(task.getIsOpen());
 		switchButton.setEnable(true);
 		
@@ -70,7 +68,6 @@ public class TaskListAdapter<T> extends CursorAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				System.out.println("click");
 				if (switchButton.isOn()) {
 					switchButton.changeState(Task.CLOSE);
 					task.setIsOpen(Task.CLOSE);
@@ -80,7 +77,7 @@ public class TaskListAdapter<T> extends CursorAdapter {
 				}
 				
 				dataSource.updateTask(task);
-				changeCursor(dataSource.getTaskCursor());
+				handler.sendEmptyMessage(TaskListFragment.UPDATE_CURSOR);
 			}
 		});
 		

@@ -8,8 +8,11 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="22" />
 
+    <!-- 开机 -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 震动 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -42,8 +45,7 @@
 
         <service android:name=".service.OnBootService" >
         </service>
-        
-         <service android:name=".service.MediaService" >
+        <service android:name=".service.MediaService" >
         </service>
 
         <receiver
@@ -58,6 +60,9 @@
                 <action android:name="android.intent.action.MEDIA_EJECT" />
 
                 <data android:scheme="file" />
+            </intent-filter>
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
             </intent-filter>
         </receiver>
         <receiver
