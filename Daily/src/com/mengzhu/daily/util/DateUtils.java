@@ -11,7 +11,7 @@ public class DateUtils {
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 
-				calendar.get(Calendar.DAY_OF_MONTH), hour, minute);
+				calendar.get(Calendar.DAY_OF_MONTH), hour, minute,0);
 		long millis = calendar.getTimeInMillis();
 		
 		return millis;

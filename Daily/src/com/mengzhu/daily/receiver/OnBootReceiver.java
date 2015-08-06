@@ -1,9 +1,5 @@
 package com.mengzhu.daily.receiver;
 
-import com.mengzhu.daily.AddTimedActivity;
-import com.mengzhu.daily.MainActivity;
-import com.mengzhu.daily.R;
-import com.mengzhu.daily.service.OnBootService;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,6 +9,11 @@ import android.content.Intent;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+
+import com.mengzhu.daily.AddTimedActivity;
+import com.mengzhu.daily.MainActivity;
+import com.mengzhu.daily.R;
+import com.mengzhu.daily.service.OnBootService;
 
 public class OnBootReceiver extends BroadcastReceiver{
 	private Context context;

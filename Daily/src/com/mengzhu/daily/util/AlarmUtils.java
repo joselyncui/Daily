@@ -13,18 +13,20 @@ public class AlarmUtils {
 	public static void setAlarms(Context context, Timed timed) {
 		System.out.println("alarm create " );
 		AlarmManager am = getAlarmManager(context);
+		
+		String timedStr = GsonUtils.objToStr(timed);
+		
 		Intent intent = new Intent();
 		intent.setAction(AlarmReceiver.ALARM_RECEIVER_ACTION);
 		
-		intent.putExtra("comment", timed.getComment());
-		intent.putExtra("time", timed.getTime());
+		intent.putExtra(Timed.GSON_KEY, timedStr);
 		PendingIntent pi = PendingIntent.getBroadcast(context, timed.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		am.set(AlarmManager.RTC_WAKEUP,
 				timed.getTime(), pi);
 	}
 	
 	public static void cancelAlarms(Context context, Timed timed) {
-		System.out.println("alarm cancel " + timed.getId());
+		
 		Intent intent = new Intent();
 		intent.setAction(AlarmReceiver.ALARM_RECEIVER_ACTION);
 		PendingIntent pIntent = PendingIntent.getBroadcast(context, timed.getId(), intent, 0);

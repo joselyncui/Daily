@@ -1,6 +1,7 @@
 package com.mengzhu.daily;
 
 import android.app.FragmentManager;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -8,13 +9,16 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mengzhu.daily.receiver.AlarmOverReceiver;
 import com.mengzhu.daily.view.TabView;
 import com.mengzhu.daily.view.TabView.TabClickListener;
 
-public class MainActivity extends BaseActivity implements TabClickListener, OnClickListener {
+public class MainActivity extends BaseActivity implements TabClickListener,
+		OnClickListener {
 
 	private FragmentManager fm;
 	private TabView tabView;
+	
 
 	// tabview
 	private String[] actions = { "常规", "定时", "统计" };
@@ -40,11 +44,14 @@ public class MainActivity extends BaseActivity implements TabClickListener, OnCl
 		init(savedInstanceState);// 初始化fragment
 
 		if (isLater) {
-			 MarginLayoutParams params = (MarginLayoutParams) findViewById(R.id.toolbar).getLayoutParams();
-			 params.setMargins(0, statusBarHeight, 0, 0);
+			MarginLayoutParams params = (MarginLayoutParams) findViewById(
+					R.id.toolbar).getLayoutParams();
+			params.setMargins(0, statusBarHeight, 0, 0);
 		}
+
+		
 	}
-	
+
 	/**
 	 * init fragments
 	 * 
@@ -73,7 +80,12 @@ public class MainActivity extends BaseActivity implements TabClickListener, OnCl
 		default:
 			break;
 		}
-		
 	}
 	
+	@Override
+	protected void onDestroy() {
+		
+		super.onDestroy();
+	}
+
 }
