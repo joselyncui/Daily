@@ -46,7 +46,7 @@ public class DailyDBHelper extends SQLiteOpenHelper{
 				+ COLUMN_ISOPEN + INTEGER_TYPE
 				+ " );";
 	}
-
+	
 	public DailyDBHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}

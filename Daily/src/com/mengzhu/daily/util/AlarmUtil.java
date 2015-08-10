@@ -11,7 +11,6 @@ import com.mengzhu.daily.receiver.AlarmReceiver;
 public class AlarmUtil {
 
 	public static void setAlarms(Context context, Timed timed) {
-		System.out.println("alarm create " );
 		AlarmManager am = getAlarmManager(context);
 		
 		String timedStr = GsonUtil.objToStr(timed);

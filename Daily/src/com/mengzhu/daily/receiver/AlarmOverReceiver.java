@@ -22,7 +22,6 @@ public class AlarmOverReceiver extends BroadcastReceiver{
 		Timed timed = GsonUtil.strToObj(Timed.class, timedStr);
 		alarmOverInterface.onAlarmOver(timed.getId());
 		
-		System.out.println("over ");
 	}
 	
 	public interface AlarmOverInterface{

@@ -56,7 +56,6 @@ public class DateUtil {
 	
 	public static void format(long millims) {
 		Date nowTime=new Date(millims); 
-		System.out.println(nowTime); 
 		SimpleDateFormat time=new SimpleDateFormat("yyyy MM dd HH mm ss"); 
 		System.out.println(time.format(nowTime)); 
 	}
