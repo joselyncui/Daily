@@ -10,6 +10,9 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.mengzhu.daily.adapter.TaskListAdapter;
 import com.mengzhu.daily.db.DailyDataSource;
 import com.mengzhu.daily.entity.Task;
@@ -22,6 +25,7 @@ public class TaskListFragment extends BaseFragment{
 	
 	public static final int UPDATE_CURSOR = 1;
 	private DragListView dragListView;
+	private TextView emptyView;
 	private TaskListAdapter<Task> taskListAdapter;
     private DailyDataSource dataSource;
    
@@ -48,9 +52,12 @@ public class TaskListFragment extends BaseFragment{
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.task_fragment_layout, container, false);
 		dragListView = (DragListView)view.findViewById(R.id.drag_list_view);
+		emptyView = (TextView)view.findViewById(R.id.empty_view);
+		
 		dataSource = DailyDataSource.getInstance(getActivity());
 		
 		context = getActivity();
+		dragListView.setEmptyView(emptyView);
 		
 		cursor = dataSource.getTaskCursor();
 		taskListAdapter = new TaskListAdapter<Task>(context, cursor, false, R.layout.task_list_item_layout, handler);

@@ -2,30 +2,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    >
+    android:background="@color/white" >
+
     <View
-	    android:id="@+id/image_top"
-	    android:layout_width="match_parent"
-	    android:layout_height="200dp"
-	    android:background="@drawable/toolbar_bg"/>
-	<View 
-	    android:layout_width="match_parent"
-	    android:layout_height="200dp"
-	    android:background="@drawable/ban_shadow"/>
+        android:id="@+id/image_top"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/toolbar_bg" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/ban_shadow" />
 
     <com.mengzhu.daily.view.DragListView
         android:id="@+id/drag_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" 
+        android:layout_height="match_parent"
         android:layout_below="@id/image_top"
-        android:divider="@color/ll_gray"
-        android:dividerHeight="1dp"
-        android:scrollbars="none"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:background="@color/white" 
+        android:background="@color/white"
+        android:divider="@color/ll_gray"
+        android:dividerHeight="1dp"
         android:listSelector="@color/white"
-        />
+        android:scrollbars="none" />
+
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:drawableTop="@drawable/empty"
+        android:text="还没有任务呢"
+        android:visibility="gone" />
 
 </RelativeLayout>
