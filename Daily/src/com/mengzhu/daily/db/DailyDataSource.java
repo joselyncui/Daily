@@ -94,49 +94,63 @@ public final class DailyDataSource {
 	}
 
 	/**
+	 * 删除小于某个时间的task
+	 * 
+	 * @param time
+	 */
+	public void clearTask(long time) {
+		SQLiteDatabase database = open();
+		database.delete(TaskEntity.TABLE_NAME, TaskEntity.COLUMN_TIMES + "< ?",
+				new String[] { String.valueOf(time) });
+		database.close();
+	}
+
+	/**
 	 * 更新task信息
 	 * 
 	 * @param task
 	 */
 	public void updateTask(Task task) {
 		SQLiteDatabase database = open();
-		
+
 		ContentValues params = new ContentValues();
 		params.put(TaskEntity.COLUMN_COMMENT, task.getComment());
 		params.put(TaskEntity.COLUMN_LEVEL, task.getLevel());
 		params.put(TaskEntity.COLUMN_TIMES, task.getHours());
 		params.put(TaskEntity.COLUMN_ISOPEN, task.getIsOpen());
-		
-		database.update(TaskEntity.TABLE_NAME, params, TaskEntity.COLUMN_ID+"=?", 
-				new String[]{String.valueOf(task.getId())});
+
+		database.update(TaskEntity.TABLE_NAME, params, TaskEntity.COLUMN_ID
+				+ "=?", new String[] { String.valueOf(task.getId()) });
 	}
-	
+
 	/**
 	 * 修改task位置
 	 * 
 	 * @param from
 	 * @param to
 	 */
-	public void changeTaskPosition(Task from, Task to){
-		
-		deleteTask(from);//移除目标task
-		
+	public void changeTaskPosition(Task from, Task to) {
+
+		deleteTask(from);// 移除目标task
+
 		SQLiteDatabase database = open();
 		database.beginTransaction();
-		
-		String[] columns = new String[]{TaskEntity.COLUMN_ID, TaskEntity.COLUMN_COMMENT, 
-				TaskEntity.COLUMN_LEVEL, TaskEntity.COLUMN_TIMES, TaskEntity.COLUMN_ISOPEN};
+
+		String[] columns = new String[] { TaskEntity.COLUMN_ID,
+				TaskEntity.COLUMN_COMMENT, TaskEntity.COLUMN_LEVEL,
+				TaskEntity.COLUMN_TIMES, TaskEntity.COLUMN_ISOPEN };
 		String selection = "";
-		if (from.getId() < to.getId()) {//在上面
-			selection =TaskEntity.COLUMN_ID + ">?";
+		if (from.getId() < to.getId()) {// 在上面
+			selection = TaskEntity.COLUMN_ID + ">?";
 		} else {
-			selection = TaskEntity.COLUMN_ID+">=?";
+			selection = TaskEntity.COLUMN_ID + ">=?";
 		}
-		
-		String[] args = new String[]{to.getId()+""};
-		Cursor cursor = database.query(TaskEntity.TABLE_NAME, columns, selection, args, null, null, null);
+
+		String[] args = new String[] { to.getId() + "" };
+		Cursor cursor = database.query(TaskEntity.TABLE_NAME, columns,
+				selection, args, null, null, null);
 		List<Task> tasks = new ArrayList<>();
-		
+
 		if (cursor.moveToFirst()) {
 			do {
 				Task task = new Task();
@@ -153,22 +167,23 @@ public final class DailyDataSource {
 				tasks.add(task);
 			} while (cursor.moveToNext());
 		}
-		
-		//删除选项
+
+		// 删除选项
 		for (int i = 0; i < tasks.size(); i++) {
-			String delWhareStr = TaskEntity.COLUMN_ID + "=" + tasks.get(i).getId();
+			String delWhareStr = TaskEntity.COLUMN_ID + "="
+					+ tasks.get(i).getId();
 			database.delete(TaskEntity.TABLE_NAME, delWhareStr, null);
 		}
-		
-		//插入原task
+
+		// 插入原task
 		ContentValues params = new ContentValues();
 		params.put(TaskEntity.COLUMN_COMMENT, from.getComment());
 		params.put(TaskEntity.COLUMN_LEVEL, from.getLevel());
 		params.put(TaskEntity.COLUMN_TIMES, from.getHours());
 		params.put(TaskEntity.COLUMN_ISOPEN, from.getIsOpen());
 		database.insert(TaskEntity.TABLE_NAME, null, params);
-		
-		//插入被删除的tasks
+
+		// 插入被删除的tasks
 		for (int i = 0; i < tasks.size(); i++) {
 			ContentValues params2 = new ContentValues();
 			params.put(TaskEntity.COLUMN_COMMENT, tasks.get(i).getComment());
@@ -177,23 +192,23 @@ public final class DailyDataSource {
 			params.put(TaskEntity.COLUMN_ISOPEN, tasks.get(i).getIsOpen());
 			database.insert(TaskEntity.TABLE_NAME, null, params);
 		}
-		
+
 		database.setTransactionSuccessful();
 		database.endTransaction();
 	}
-	
+
 	/**
 	 * 获取所有task, 并返回cursor
 	 * 
 	 * @return
 	 */
-	public Cursor getTaskCursor(){
+	public Cursor getTaskCursor() {
 		String queryStr = "SELECT * FROM " + TaskEntity.TABLE_NAME;
 		SQLiteDatabase database = open();
 		Cursor cursor = database.rawQuery(queryStr, null);
 		return cursor;
 	}
-	
+
 	/**
 	 * 将cursor转化为task
 	 * 
@@ -260,7 +275,6 @@ public final class DailyDataSource {
 		}
 		return timeds;
 	}
-	
 
 	/**
 	 * 删除定时任务
@@ -271,6 +285,18 @@ public final class DailyDataSource {
 		SQLiteDatabase database = open();
 		database.delete(TimedEntity.TABLE_NAME, TimedEntity.COLUMN_ID + "=?",
 				new String[] { String.valueOf(timed.getId()) });
+		database.close();
+	}
+
+	/**
+	 * 清除小于某个时间的定时任务
+	 * 
+	 * @param time
+	 */
+	public void clearTimed(long time) {
+		SQLiteDatabase database = open();
+		database.delete(TimedEntity.TABLE_NAME, TimedEntity.COLUMN_TIME
+				+ " < ?", new String[] { String.valueOf(time) });
 		database.close();
 	}
 

@@ -1,7 +1,6 @@
 package com.mengzhu.daily;
 
 import android.app.FragmentManager;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -9,7 +8,6 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mengzhu.daily.receiver.AlarmOverReceiver;
 import com.mengzhu.daily.view.TabView;
 import com.mengzhu.daily.view.TabView.TabClickListener;
 

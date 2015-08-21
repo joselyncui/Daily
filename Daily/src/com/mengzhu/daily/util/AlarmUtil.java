@@ -32,11 +32,31 @@ public class AlarmUtil {
 		AlarmManager am = getAlarmManager(context);
 		am.cancel(pIntent);
 	}
+	
+	/**
+	 * 设置 repeat定时
+	 * 
+	 * @param context
+	 * @param beginTime，  定时第一次的执行时间
+	 * @param interval， 重复执行的间隔时间
+	 */
+	public static void setRepeatAlarms(Context context, long beginTime, long interval) {
+		Intent intent =new Intent();
+	    intent.setAction(AlarmReceiver.ALARM_RECEIVER_REPEAT_ACTION);
+	    
+	    PendingIntent sender=PendingIntent
+	        .getBroadcast(context, 0, intent, 0);
+	    
+	    AlarmManager am=getAlarmManager(context);
+	    am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP
+	            , beginTime, interval, sender);
+	}
 
 	public static AlarmManager getAlarmManager(Context context) {
 		AlarmManager am = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
 		return am;
 	}
+	
 
 }

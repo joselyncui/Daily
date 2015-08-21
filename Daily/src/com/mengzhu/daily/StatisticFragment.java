@@ -24,7 +24,6 @@ public class StatisticFragment extends BaseFragment {
 	private Context context;
 	private PieChart pieChart;
 	protected String[] mParties = new String[] { "完成", "未完成" };
-	private Typeface tf;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +42,6 @@ public class StatisticFragment extends BaseFragment {
 		pieChart.setUsePercentValues(true);
 		pieChart.setDescription("");
 		pieChart.setDragDecelerationFrictionCoef(0.95f);
-		tf = Typeface.createFromAsset(context.getAssets(), "OpenSans-Regular.ttf");
 
 		pieChart.setCenterTextTypeface(Typeface.createFromAsset(context.getAssets(),
 				"OpenSans-Light.ttf"));

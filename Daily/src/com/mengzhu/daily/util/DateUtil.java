@@ -1,5 +1,6 @@
 package com.mengzhu.daily.util;
 
+import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,10 +55,33 @@ public class DateUtil {
 		return minute;
 	}
 	
+	@SuppressLint("SimpleDateFormat")
 	public static void format(long millims) {
 		Date nowTime=new Date(millims); 
 		SimpleDateFormat time=new SimpleDateFormat("yyyy MM dd HH mm ss"); 
 		System.out.println(time.format(nowTime)); 
+	}
+	
+	public static long getStartTime(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 
+				calendar.get(Calendar.DAY_OF_MONTH), 0, 0,0);
+		long millis = calendar.getTimeInMillis();
+		
+		return millis;
+	}
+	
+	public static long getEndTime(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 
+				calendar.get(Calendar.DAY_OF_MONTH), 23, 59,59);
+		long millis = calendar.getTimeInMillis();
+		
+		return millis;
+	}
+	
+	public static long getDayMilSecond(){
+		return 24*60*60 * 1000;
 	}
 
 }

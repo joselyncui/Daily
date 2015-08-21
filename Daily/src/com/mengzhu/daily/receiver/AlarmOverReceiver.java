@@ -21,11 +21,12 @@ public class AlarmOverReceiver extends BroadcastReceiver{
 		String timedStr = intent.getExtras().getString(Timed.GSON_KEY);
 		Timed timed = GsonUtil.strToObj(Timed.class, timedStr);
 		alarmOverInterface.onAlarmOver(timed.getId());
-		
 	}
 	
 	public interface AlarmOverInterface{
 		public void onAlarmOver(int timedId);
 	}
+	
+	
 
 }

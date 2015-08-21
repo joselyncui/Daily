@@ -49,6 +49,8 @@
         </service>
         <service android:name=".service.MediaService" >
         </service>
+        <service android:name=".service.CleanDataService" >
+        </service>
 
         <receiver
             android:name=".receiver.OnBootReceiver"
@@ -72,6 +74,7 @@
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.mengzhu.daily.receiver.AlarmReceiver" />
+                <action android:name="com.mengzhu.daily.receiver.AlarmReceiver.Repeat" />
             </intent-filter>
         </receiver>
     </application>

@@ -11,7 +11,6 @@ public class TaskChangeObserver extends ContentObserver{
 
 	@Override
 	public boolean deliverSelfNotifications() {
-		// TODO Auto-generated method stub
 		return super.deliverSelfNotifications();
 	}
 }
