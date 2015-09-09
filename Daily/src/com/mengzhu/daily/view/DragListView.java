@@ -19,7 +19,6 @@ import android.widget.ListView;
 
 import com.mengzhu.daily.AddTaskActivity;
 import com.mengzhu.daily.R;
-import com.mengzhu.daily.adapter.TaskListAdapter;
 import com.mengzhu.daily.entity.Task;
 
 /**
@@ -191,8 +190,6 @@ public class DragListView extends ListView implements OnItemClickListener{
         if (tempPosition != INVALID_POSITION ) {
             dragDestPosition = tempPosition;
         }
-
-        TaskListAdapter<Task> adapter = (TaskListAdapter)getAdapter();
 
         if(dragDestPosition >= 0 && dragDestPosition < getAdapter().getCount()) {
         	if(onDropListener != null){

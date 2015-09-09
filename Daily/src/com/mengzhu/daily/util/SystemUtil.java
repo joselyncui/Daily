@@ -12,6 +12,7 @@ import android.util.Log;
 
 public class SystemUtil {
 
+	@SuppressWarnings("deprecation")
 	public static boolean isForeground(Context context, String className) {
 
 		if (context == null || TextUtils.isEmpty(className)) {

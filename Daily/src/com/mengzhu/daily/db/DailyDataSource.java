@@ -83,7 +83,6 @@ public final class DailyDataSource {
 	
 	public int getOpenTaskCount(){
 
-		List<Task> tasks = new ArrayList<>();
 		String queryStr = "SELECT * FROM " + TaskEntity.TABLE_NAME +" where " + TaskEntity.COLUMN_ISOPEN +"=0";
 		SQLiteDatabase database = open();
 		Cursor cursor = database.rawQuery(queryStr, null);
@@ -91,7 +90,6 @@ public final class DailyDataSource {
 	}
 	
 	public int getAllTaskCount(){
-		List<Task> tasks = new ArrayList<>();
 		String queryStr = "SELECT * FROM " + TaskEntity.TABLE_NAME;
 		SQLiteDatabase database = open();
 		Cursor cursor = database.rawQuery(queryStr, null);
@@ -202,7 +200,6 @@ public final class DailyDataSource {
 
 		// 插入被删除的tasks
 		for (int i = 0; i < tasks.size(); i++) {
-			ContentValues params2 = new ContentValues();
 			params.put(TaskEntity.COLUMN_COMMENT, tasks.get(i).getComment());
 			params.put(TaskEntity.COLUMN_LEVEL, tasks.get(i).getLevel());
 			params.put(TaskEntity.COLUMN_TIMES, tasks.get(i).getHours());

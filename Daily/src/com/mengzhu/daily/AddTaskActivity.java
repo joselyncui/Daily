@@ -19,7 +19,6 @@ import com.mengzhu.daily.entity.Task;
 import com.mengzhu.daily.view.TextSeekBar;
 
 public class AddTaskActivity extends Activity implements OnClickListener{
-	private static final String TAG = "AddTaskActivity";
 	
 	private ImageView saveImageView;
 	private ImageView backImageView;
@@ -69,6 +68,7 @@ public class AddTaskActivity extends Activity implements OnClickListener{
 		setNotification();
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void setNotification(){
 		 // 在Android进行通知处理，首先需要重系统哪里获得通知管理器NotificationManager，它是一个系统Service。  
        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);  
