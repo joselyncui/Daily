@@ -3,6 +3,7 @@ package com.mengzhu.daily;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.mengzhu.daily.adapter.TaskListAdapter;
 import com.mengzhu.daily.db.DailyDataSource;
 import com.mengzhu.daily.entity.Task;
+import com.mengzhu.daily.util.Constant;
 import com.mengzhu.daily.view.DragListView;
 import com.mengzhu.daily.view.DragListView.OnDropListener;
 
@@ -36,6 +38,10 @@ public class TaskListFragment extends BaseFragment{
     	public void handleMessage(Message msg) {
     		if (msg.what == UPDATE_CURSOR) {
 				taskListAdapter.changeCursor(dataSource.getTaskCursor());
+				
+				Intent intent = new Intent();
+				intent.setAction(Constant.ACTION_TASK_STATE_CHANGE);
+				context.sendBroadcast(intent);
 			}
     	};
     };

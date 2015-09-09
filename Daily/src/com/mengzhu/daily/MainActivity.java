@@ -46,8 +46,6 @@ public class MainActivity extends BaseActivity implements TabClickListener,
 					R.id.toolbar).getLayoutParams();
 			params.setMargins(0, statusBarHeight, 0, 0);
 		}
-
-		
 	}
 
 	/**
@@ -66,6 +64,11 @@ public class MainActivity extends BaseActivity implements TabClickListener,
 	@Override
 	public void onTabClick(int position) {
 		toolbarTitle.setText(actions[position]);
+		if (position==2) {
+			actionImageView.setVisibility(View.INVISIBLE);
+		} else {
+			actionImageView.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override

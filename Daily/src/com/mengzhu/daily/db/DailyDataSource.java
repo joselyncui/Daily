@@ -80,6 +80,23 @@ public final class DailyDataSource {
 		}
 		return tasks;
 	}
+	
+	public int getOpenTaskCount(){
+
+		List<Task> tasks = new ArrayList<>();
+		String queryStr = "SELECT * FROM " + TaskEntity.TABLE_NAME +" where " + TaskEntity.COLUMN_ISOPEN +"=0";
+		SQLiteDatabase database = open();
+		Cursor cursor = database.rawQuery(queryStr, null);
+		return cursor.getCount();
+	}
+	
+	public int getAllTaskCount(){
+		List<Task> tasks = new ArrayList<>();
+		String queryStr = "SELECT * FROM " + TaskEntity.TABLE_NAME;
+		SQLiteDatabase database = open();
+		Cursor cursor = database.rawQuery(queryStr, null);
+		return cursor.getCount();
+	}
 
 	/**
 	 * 删除task
@@ -275,6 +292,7 @@ public final class DailyDataSource {
 		}
 		return timeds;
 	}
+	
 
 	/**
 	 * 删除定时任务
